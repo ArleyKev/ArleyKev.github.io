@@ -1,136 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name — Security Engineering</title>
+<meta name="description" content="Cybersecurity portfolio: learning journal, CTF writeups, projects and certifications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1520;
+    --panel:#141E2B;
+    --panel-2:#1A2634;
+    --line:#263648;
+    --text:#DDE5EE;
+    --muted:#8A9AAD;
+    --steel:#5FB6C9;
+    --sand:#D8A64B;
+    --rose:#D97A7A;
+    --radius:4px;
+    --col:70ch;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:2rem}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  body{
+    margin:0;background:var(--ink);color:var(--text);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--steel);text-decoration:none;border-bottom:1px solid rgba(95,182,201,.35)}
+  a:hover{border-bottom-color:var(--steel)}
+  :focus-visible{outline:2px solid var(--sand);outline-offset:3px}
 
-    <title>Cybersecurity Portfolio</title>
+  /* ---------- shell ---------- */
+  .shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:64px;max-width:1120px;margin:0 auto;padding:0 28px}
 
-    <link rel="stylesheet" href="style.css">
+  /* ---------- left rail ---------- */
+  .rail{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:48px 0}
+  .rail .mark{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--muted);letter-spacing:.02em;margin-bottom:28px}
+  .rail .mark b{color:var(--text);font-weight:600;display:block;font-size:1rem}
+  .rail nav{display:flex;flex-direction:column;gap:2px}
+  .rail nav a{
+    font-family:"IBM Plex Mono",monospace;font-size:.83rem;color:var(--muted);
+    border:0;padding:7px 0 7px 16px;border-left:2px solid var(--line);transition:color .15s,border-color .15s
+  }
+  .rail nav a:hover{color:var(--text)}
+  .rail nav a.on{color:var(--steel);border-left-color:var(--steel)}
+  .rail .links{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px;font-size:.8rem}
+  .rail .links a{color:var(--muted);border:0}
+  .rail .links a:hover{color:var(--steel)}
+
+  /* ---------- main ---------- */
+  main{padding:96px 0 120px;max-width:var(--col)}
+  section{margin-bottom:104px;scroll-margin-top:48px}
+  section:last-of-type{margin-bottom:48px}
+
+  h1{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:clamp(2rem,5vw,2.9rem);line-height:1.1;letter-spacing:-.025em;margin:0 0 18px}
+  h2{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:1.28rem;letter-spacing:-.01em;margin:0 0 6px}
+  h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1.02rem;margin:0}
+  p{margin:0 0 16px}
+  .lede{font-size:1.1rem;color:var(--text)}
+  .sub{color:var(--muted);margin-bottom:34px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;padding-left:22px;margin-bottom:40px}
+  .hero::before{
+    content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;
+    background:linear-gradient(180deg,var(--steel),var(--sand))
+  }
+  .hero .role{font-family:"IBM Plex Mono",monospace;color:var(--steel);font-size:.9rem;margin-bottom:12px}
+  .hero p{color:var(--muted);max-width:60ch}
+
+  .focus{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
+  .focus div{flex:1 1 150px;padding:14px 18px;border-right:1px solid var(--line)}
+  .focus div:last-child{border-right:0}
+  .focus span{display:block;font-size:.76rem;color:var(--muted);margin-bottom:3px}
+  .focus strong{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:.92rem}
+
+  /* ---------- generic entry ---------- */
+  .entry{border-top:1px solid var(--line);padding:22px 0}
+  .entry:first-of-type{border-top:0;padding-top:4px}
+  .meta{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--muted);margin-bottom:6px;display:flex;gap:14px;flex-wrap:wrap}
+  .entry p{margin:8px 0 0;color:var(--muted)}
+  .entry p.body{color:var(--text)}
+
+  /* journal accordion */
+  details{border-top:1px solid var(--line)}
+  details:first-of-type{border-top:0}
+  summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;gap:18px;align-items:baseline}
+  summary::-webkit-details-marker{display:none}
+  summary .date{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--muted);flex:0 0 78px}
+  summary .title{flex:1;font-weight:500}
+  summary .chev{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+  details[open] summary .chev{color:var(--steel)}
+  details[open] summary .title{color:var(--steel)}
+  .detail-body{padding:0 0 24px 96px;color:var(--muted)}
+  .detail-body ul{margin:10px 0;padding-left:18px}
+  .detail-body li{margin-bottom:6px}
+  @media (max-width:640px){.detail-body{padding-left:0}}
+
+  /* tags */
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .tag{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:2px 7px}
+
+  /* difficulty pips */
+  .pip{font-family:"IBM Plex Mono",monospace;font-size:.72rem;padding:2px 7px;border-radius:2px;border:1px solid}
+  .pip.easy{color:#7FC08C;border-color:rgba(127,192,140,.4)}
+  .pip.medium{color:var(--sand);border-color:rgba(216,166,75,.4)}
+  .pip.hard{color:var(--rose);border-color:rgba(217,122,122,.4)}
+
+  /* projects */
+  .proj{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px}
+  .proj-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+  .proj p{margin:10px 0 0;color:var(--muted);font-size:.95rem}
+  .proj .repo{font-family:"IBM Plex Mono",monospace;font-size:.78rem;white-space:nowrap}
+  .proj ul{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:.95rem}
+  .proj li{margin-bottom:4px}
+
+  /* certs */
+  .cert{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-top:1px solid var(--line)}
+  .cert:first-of-type{border-top:0}
+  .cert .status{font-family:"IBM Plex Mono",monospace;font-size:.75rem;flex:0 0 84px}
+  .cert .status.done{color:var(--steel)}
+  .cert .status.wip{color:var(--sand)}
+  .cert .who{color:var(--muted);font-size:.88rem}
+
+  footer{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.85rem;font-family:"IBM Plex Mono",monospace}
+
+  /* ---------- mobile ---------- */
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr;gap:0;padding:0 22px}
+    .rail{position:static;height:auto;padding:36px 0 0;justify-content:flex-start}
+    .rail nav{flex-direction:row;flex-wrap:wrap;gap:0 4px}
+    .rail nav a{border-left:0;border-bottom:2px solid var(--line);padding:6px 10px 6px 0;margin-right:10px}
+    .rail nav a.on{border-left:0;border-bottom-color:var(--steel)}
+    main{padding:44px 0 80px}
+    section{margin-bottom:76px}
+  }
+</style>
 </head>
-
 <body>
-    <header>
-        <nav>
-            <div class="logo">Cybersecurity Portfolio</div>
 
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#journal">Cybersecurity Learning Journal</a></li>
-                <li><a href="#projects">Projects</a></li>
-            </ul>
-        </nav>
-    </header>
+<div class="shell">
+  <aside class="rail">
+    <div class="mark"><b id="railName">Your Name</b><span id="railRole">Security Engineering</span></div>
+    <nav id="nav">
+      <a href="#about" class="on">about</a>
+      <a href="#journal">journal</a>
+      <a href="#ctf">writeups</a>
+      <a href="#projects">projects</a>
+      <a href="#certs">certifications</a>
+    </nav>
+    <div class="links" id="railLinks"></div>
+  </aside>
 
-  
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <p class="eyebrow">CYBERSECURITY • INFORMATION SECURITY • SOC</p>
-
-            <h1>Building My Cybersecurity Journey</h1>
-
-            <p class="hero-text">
-                A practical portfolio documenting my cybersecurity learning,
-                hands-on labs, security projects, CTFs, and technical research.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#projects" class="button">View Projects</a>
-                <a href="#journal" class="button secondary">Explore My Journey</a>
-            </div>
-        </div>
-    </section>
-
-  
+  <main>
     <section id="about">
-        <div class="section-container">
-            <p class="section-label">ABOUT</p>
-            <h2>About Me</h2>
-
-            <p>
-                I am building my career in cybersecurity with a focus on
-                Security Operations, threat detection, incident response,
-                IAM, vulnerability management, and practical security
-                engineering.
-            </p>
-
-            <p>
-                This portfolio documents what I learn and, more importantly,
-                how I apply that knowledge through hands-on projects,
-                security labs, CTFs, and investigations.
-            </p>
-        </div>
+      <div class="hero">
+        <div class="role" id="heroRole"></div>
+        <h1 id="heroName"></h1>
+        <p class="lede" id="heroLede"></p>
+      </div>
+      <div class="focus" id="focusStrip"></div>
+      <div id="aboutBody" style="margin-top:34px"></div>
     </section>
-
 
     <section id="journal">
-        <div class="section-container">
-            <p class="section-label">LEARNING</p>
-            <h2>Cybersecurity Learning Journal</h2>
-
-            <p>
-                Notes and practical learning from my cybersecurity journey.
-            </p>
-
-            <div class="card-grid">
-
-                <article class="card">
-                    <h3>SOC & SIEM</h3>
-                    <p>
-                        Learning security monitoring, alert analysis,
-                        log investigation, and SIEM workflows.
-                    </p>
-                </article>
-
-            </div>
-        </div>
+      <h2>Learning journal</h2>
+      <p class="sub">What I'm studying, what broke, and what I actually understood at the end of it.</p>
+      <div id="journalList"></div>
     </section>
 
+    <section id="ctf">
+      <h2>CTF writeups &amp; lab work</h2>
+      <p class="sub">Hands-on boxes, detection labs and blue-team exercises.</p>
+      <div id="ctfList"></div>
+    </section>
 
     <section id="projects">
-        <div class="section-container">
-            <p class="section-label">BUILD</p>
-            <h2>Projects</h2>
-
-            <div class="card-grid">
-
-                <article class="card project-card">
-                    <h3>IAM Policy Analyzer</h3>
-                    <p>
-                        A security-focused tool for identifying excessive
-                        permissions in IAM policies and suggesting safer
-                        configurations.
-                    </p>
-                    <span>FastAPI • Python • Streamlit • IAM</span>
-                </article>
-
-                <article class="card project-card">
-                    <h3>JWT Authentication Security API</h3>
-                    <p>
-                        A security demonstration covering authentication,
-                        password hashing, JWT tokens, and SQL injection risks.
-                    </p>
-                    <span>Python • Flask • JWT • bcrypt</span>
-                </article>
-
-                <article class="card project-card">
-                    <h3>SIEM Home Lab</h3>
-                    <p>
-                        A Windows-based security lab for collecting logs,
-                        creating detections, and investigating security events.
-                    </p>
-                    <span>Wazuh • Sysmon • Windows • MITRE ATT&CK</span>
-                </article>
-
-            </div>
-        </div>
+      <h2>Projects</h2>
+      <p class="sub">Tools I've built to solve a problem I ran into myself.</p>
+      <div id="projectList"></div>
     </section>
 
+    <section id="certs">
+      <h2>Certifications &amp; training</h2>
+      <p class="sub">Completed, and what I'm working toward next.</p>
+      <div id="certList"></div>
+    </section>
 
-    <footer>
-        <p>© 2026 Cybersecurity Portfolio</p>
-    </footer>
+    <footer id="footer"></footer>
+  </main>
+</div>
 
+<script>
+/* ============================================================
+   EDIT EVERYTHING BELOW. Nothing above this line needs changing.
+   ============================================================ */
+
+const PROFILE = {
+  name: "Your Name",
+  role: "Application Security / Blue Team",
+  lede: "I build and break access-control systems. Currently focused on IAM misconfiguration, token security, and detection engineering in a home SIEM lab.",
+  // Replace with your real background — 2 short paragraphs works best.
+  about: [
+    "Write your actual background here: where you're coming from (dev, IT, support, student), what pulled you into security, and what you work on day to day.",
+    "Then say what you're aiming at — the roles you want, the areas you go deep on, and the kind of problem you like being handed. Keep it concrete; specifics beat adjectives."
+  ],
+  focus: [
+    { label: "Currently studying", value: "Detection engineering" },
+    { label: "Primary lab",        value: "Wazuh + Sysmon" },
+    { label: "Open to",            value: "SOC / AppSec roles" }
+  ],
+  links: [
+    { label: "GitHub",   url: "https://github.com/yourusername" },
+    { label: "LinkedIn", url: "https://linkedin.com/in/yourusername" },
+    { label: "TryHackMe",url: "https://tryhackme.com/p/yourusername" },
+    { label: "Email",    url: "mailto:you@example.com" }
+  ]
+};
+
+const JOURNAL = [
+  {
+    date: "2026-09-14",
+    title: "Why IAM wildcards are worse than they look",
+    tags: ["AWS", "IAM", "least privilege"],
+    // Use <p>, <ul><li>, <code> freely here.
+    body: `
+      <p>Short intro: what you were trying to learn and why.</p>
+      <ul>
+        <li>What you tested or read.</li>
+        <li>The thing that surprised you.</li>
+        <li>The mental model you walked away with.</li>
+      </ul>
+      <p>Close with the open question you still have — that's what makes a journal different from a tutorial.</p>`
+  },
+  {
+    date: "2026-09-02",
+    title: "JWT algorithm confusion, reproduced end to end",
+    tags: ["JWT", "authentication", "crypto"],
+    body: `<p>Replace with your notes. Keep one entry per topic and date them — the trail of dates is the point.</p>`
+  },
+  {
+    date: "2026-08-21",
+    title: "Reading Sysmon Event ID 1 without drowning in noise",
+    tags: ["Sysmon", "Windows", "logging"],
+    body: `<p>Replace with your notes.</p>`
+  }
+];
+
+const CTF = [
+  {
+    platform: "TryHackMe",
+    name: "Room name",
+    difficulty: "Medium",          // Easy | Medium | Hard
+    date: "Sep 2026",
+    summary: "One or two lines: the foothold, the pivot, and the privesc. No spoilers beyond what the platform allows.",
+    tags: ["enumeration", "SUID", "privilege escalation"],
+    url: ""                        // link to your full writeup, or leave "" to hide
+  },
+  {
+    platform: "LetsDefend",
+    name: "Alert investigation name",
+    difficulty: "Easy",
+    date: "Aug 2026",
+    summary: "What the alert claimed, what the logs actually showed, and how you closed it out.",
+    tags: ["SOC", "triage", "phishing"],
+    url: ""
+  },
+  {
+    platform: "Home lab",
+    name: "Brute-force detection rule",
+    difficulty: "Hard",
+    date: "Aug 2026",
+    summary: "Built the attack, then built the rule that catches it, then tuned out the false positives.",
+    tags: ["Wazuh", "detection", "tuning"],
+    url: ""
+  }
+];
+
+const PROJECTS = [
+  {
+    name: "IAM Policy Analyzer",
+    repo: "github.com/you/iam-policy-analyzer",
+    url: "https://github.com/yourusername",
+    blurb: "Parses AWS IAM policy documents and flags over-permissive statements before they reach production.",
+    points: [
+      "Detects wildcard actions and resources, plus privilege-escalation paths.",
+      "Outputs findings ranked by blast radius, not just count.",
+      "Replace these with what it actually does."
+    ],
+    tags: ["Python", "AWS", "IAM"]
+  },
+  {
+    name: "JWT Security API",
+    repo: "github.com/you/jwt-security-api",
+    url: "https://github.com/yourusername",
+    blurb: "A service that validates JWTs against a checklist of real-world token failures.",
+    points: [
+      "Checks algorithm confusion, weak secrets, missing claim validation, and expiry handling.",
+      "Returns a per-token report you can wire into CI."
+    ],
+    tags: ["Node.js", "JWT", "authentication"]
+  },
+  {
+    name: "SIEM Home Lab",
+    repo: "github.com/you/siem-home-lab",
+    url: "https://github.com/yourusername",
+    blurb: "A reproducible detection lab: attacker box, victim endpoints, and a SIEM collecting everything in between.",
+    points: [
+      "Wazuh manager with Sysmon-instrumented Windows and Linux endpoints.",
+      "Attack simulations mapped to MITRE ATT&CK techniques.",
+      "Custom rules with documented tuning decisions."
+    ],
+    tags: ["Wazuh", "Sysmon", "MITRE ATT&CK"]
+  }
+];
+
+const CERTS = [
+  { status: "Completed",   name: "CompTIA Security+",              issuer: "CompTIA",   year: "2026" },
+  { status: "Completed",   name: "SOC Level 1 learning path",       issuer: "TryHackMe", year: "2026" },
+  { status: "In progress", name: "Certified Defensive Security Analyst", issuer: "—",    year: "Target 2027" }
+];
+
+/* ============================================================
+   Rendering — no need to edit below.
+   ============================================================ */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tags = a => a && a.length ? `<div class="tags">${a.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>` : '';
+
+$('railName').textContent = PROFILE.name;
+$('railRole').textContent = PROFILE.role;
+$('heroName').textContent = PROFILE.name;
+$('heroRole').textContent = PROFILE.role;
+$('heroLede').textContent = PROFILE.lede;
+document.title = `${PROFILE.name} — ${PROFILE.role}`;
+
+$('railLinks').innerHTML = PROFILE.links
+  .map(l => `<a href="${esc(l.url)}"${l.url.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${esc(l.label)}</a>`)
+  .join('');
+
+$('focusStrip').innerHTML = PROFILE.focus
+  .map(f => `<div><span>${esc(f.label)}</span><strong>${esc(f.value)}</strong></div>`).join('');
+
+$('aboutBody').innerHTML = PROFILE.about.map(p => `<p>${esc(p)}</p>`).join('');
+
+$('journalList').innerHTML = JOURNAL.map((e, i) => `
+  <details${i === 0 ? ' open' : ''}>
+    <summary>
+      <span class="date">${esc(e.date)}</span>
+      <span class="title">${esc(e.title)}</span>
+      <span class="chev">+</span>
+    </summary>
+    <div class="detail-body">${e.body}${tags(e.tags)}</div>
+  </details>`).join('');
+
+$('ctfList').innerHTML = CTF.map(c => `
+  <article class="entry">
+    <div class="meta">
+      <span>${esc(c.platform)}</span>
+      <span>${esc(c.date)}</span>
+      <span class="pip ${esc(c.difficulty).toLowerCase()}">${esc(c.difficulty)}</span>
+    </div>
+    <h3>${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a>` : esc(c.name)}</h3>
+    <p>${esc(c.summary)}</p>
+    ${tags(c.tags)}
+  </article>`).join('');
+
+$('projectList').innerHTML = PROJECTS.map(p => `
+  <article class="proj">
+    <div class="proj-head">
+      <h3>${esc(p.name)}</h3>
+      ${p.url ? `<a class="repo" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.repo)}</a>` : ''}
+    </div>
+    <p>${esc(p.blurb)}</p>
+    <ul>${p.points.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    ${tags(p.tags)}
+  </article>`).join('');
+
+$('certList').innerHTML = CERTS.map(c => `
+  <div class="cert">
+    <span class="status ${c.status.toLowerCase().startsWith('comp') ? 'done' : 'wip'}">${esc(c.status)}</span>
+    <div><h3>${esc(c.name)}</h3><div class="who">${esc(c.issuer)} · ${esc(c.year)}</div></div>
+  </div>`).join('');
+
+$('footer').textContent = `${PROFILE.name} — last updated ${new Date().toISOString().slice(0, 10)}`;
+
+// open/close marker
+document.querySelectorAll('details').forEach(d => {
+  const chev = d.querySelector('.chev');
+  const sync = () => chev.textContent = d.open ? '−' : '+';
+  sync();
+  d.addEventListener('toggle', sync);
+});
+
+// scroll-spy
+const links = [...document.querySelectorAll('#nav a')];
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id));
+    }
+  });
+}, { rootMargin: '-25% 0px -65% 0px' });
+document.querySelectorAll('main section').forEach(s => obs.observe(s));
+</script>
 </body>
 </html>
