@@ -1,3 +1,5 @@
 title: "Arley Kev"
 description: "Cybersecurity portfolio and learning journal"
 theme: minima
+plugins:
+  - jekyll-feed
