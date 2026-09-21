@@ -8,8 +8,6 @@
   <meta name="description" content="Arley Keys — cybersecurity portfolio and learning journal">
 
   <style>
-    /* ---------- Basic settings ---------- */
-
     :root {
       --bg: #0f141b;
       --text: #e6edf3;
@@ -53,8 +51,7 @@
       text-decoration: underline;
     }
 
-    /* ---------- Layout ---------- */
-
+    /* Left sidebar */
     .sidebar {
       position: fixed;
       left: 28px;
@@ -65,12 +62,12 @@
     }
 
     .sidebar h2 {
-      margin: 0 0 4px;
+      margin: 0;
       font-size: 18px;
     }
 
-    .sidebar p {
-      margin: 0 0 28px;
+    .sidebar .role {
+      margin: 2px 0 28px;
       color: var(--muted);
       font-size: 14px;
     }
@@ -86,18 +83,18 @@
       text-decoration: none;
     }
 
-    .sidebar .social {
+    .social {
       margin-top: 28px;
       font-size: 14px;
     }
 
-    .sidebar .social a {
+    .social a {
       display: block;
       margin-bottom: 7px;
     }
 
     .theme-button {
-      margin-top: 24px;
+      margin-top: 20px;
       padding: 6px 10px;
       background: transparent;
       color: var(--text);
@@ -106,6 +103,7 @@
       cursor: pointer;
     }
 
+    /* Main content */
     main {
       max-width: 760px;
       margin-left: 270px;
@@ -118,8 +116,7 @@
 
     h1 {
       margin: 0 0 12px;
-      font-size: 42px;
-      line-height: 1.2;
+      font-size: 36px;
     }
 
     h2 {
@@ -136,15 +133,10 @@
       margin-top: 0;
     }
 
-    .role {
-      color: var(--link);
-      margin-bottom: 18px;
-    }
-
     .intro {
       color: var(--muted);
-      max-width: 650px;
       font-size: 17px;
+      max-width: 650px;
     }
 
     .entry {
@@ -170,13 +162,8 @@
       border-radius: 5px;
     }
 
-    .project p {
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
+    .project p,
     .project ul {
-      margin-top: 8px;
       color: var(--muted);
     }
 
@@ -187,8 +174,7 @@
       font-size: 14px;
     }
 
-    /* ---------- Mobile ---------- */
-
+    /* Mobile */
     @media (max-width: 800px) {
       .sidebar {
         position: static;
@@ -207,12 +193,12 @@
         padding: 5px 0;
       }
 
-      .sidebar .social {
+      .social {
         display: flex;
         gap: 15px;
       }
 
-      .sidebar .social a {
+      .social a {
         margin: 0;
       }
 
@@ -220,21 +206,16 @@
         margin-left: 0;
         padding: 50px 22px;
       }
-
-      h1 {
-        font-size: 34px;
-      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ---------- Left sidebar ---------- -->
-
+  <!-- Left sidebar -->
   <aside class="sidebar">
     <h2>Arley Keys</h2>
-    <p>Blue Team / Security Operations</p>
+    <div class="role">Blue Team / Security Operations</div>
 
     <nav>
       <a href="#about">About</a>
@@ -245,7 +226,6 @@
       <a href="#certifications">Certifications</a>
     </nav>
 
-    <!-- Add or remove links here -->
     <div class="social">
       <a href="https://github.com/ArleyKev" target="_blank">GitHub</a>
       <a href="https://www.linkedin.com/" target="_blank">LinkedIn</a>
@@ -256,14 +236,11 @@
   </aside>
 
 
-  <!-- ---------- Main content ---------- -->
-
+  <!-- Main content -->
   <main>
 
     <section id="about">
-      <div class="role">Blue Team / Security Operations</div>
-
-      <h1>Arley Keys</h1>
+      <h1>About</h1>
 
       <p class="intro">
         I am building my skills in cybersecurity with a focus on
@@ -271,8 +248,8 @@
       </p>
 
       <p>
-        My portfolio documents what I study, the labs I work on,
-        security projects I build, and the things I learn along the way.
+        This portfolio documents what I study, the labs I work on,
+        security projects I build, and what I learn along the way.
       </p>
     </section>
 
@@ -326,7 +303,7 @@
       <div class="project">
         <h3>JWT Security API</h3>
         <p>
-          A small security-focused API demonstrating authentication,
+          A security-focused API demonstrating authentication,
           password hashing, and JWT-based authorization.
         </p>
         <ul>
@@ -380,11 +357,10 @@
     function toggleTheme() {
       document.body.classList.toggle("light");
 
-      if (document.body.classList.contains("light")) {
-        localStorage.setItem("theme", "light");
-      } else {
-        localStorage.setItem("theme", "dark");
-      }
+      localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light") ? "light" : "dark"
+      );
     }
 
     if (localStorage.getItem("theme") === "light") {
