@@ -1,5 +1,6 @@
 title: "Arley Kev"
 description: "Cybersecurity portfolio and learning journal"
 theme: minima
+timezone: Asia/Kolkata
 plugins:
   - jekyll-feed
