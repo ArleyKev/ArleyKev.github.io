@@ -2,7 +2,7 @@
 layout: post
 title: "IAM Policy Analyzer — why I built it and what I ran into"
 date: 2026-09-18
-category: project
+category: journal
 summary: "A tool that scans IAM policies for overly permissive rules. Here's what building it taught me."
 tags: [Python, AWS, IAM]
 ---
