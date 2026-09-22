@@ -29,10 +29,7 @@ body{
 }
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
-
 .wrap{display:flex;min-height:100vh;max-width:960px;margin:0 auto;padding:0 20px}
-
-/* sidebar */
 .side{
   width:180px;flex-shrink:0;position:sticky;top:0;height:100vh;
   padding:48px 24px 48px 0;display:flex;flex-direction:column;
@@ -58,23 +55,16 @@ a:hover{text-decoration:underline}
   transition:color .15s,border-color .15s;
 }
 .toggle:hover{color:var(--text);border-color:var(--muted)}
-
-/* main */
 main{flex:1;padding:64px 0 100px 52px;max-width:640px}
 section{margin-bottom:72px;scroll-margin-top:40px}
-
 h2{
   font-family:"JetBrains Mono",monospace;font-size:1rem;
   font-weight:500;color:var(--accent);margin-bottom:6px;
 }
 .sec-line{height:1px;background:var(--border);margin-bottom:24px}
-
-/* about */
 .about-name{font-size:1.8rem;font-weight:600;line-height:1.2;margin-bottom:8px}
 .about-role{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--accent);margin-bottom:16px}
 .about-text{color:var(--muted);font-size:.95rem;max-width:52ch}
-
-/* post list (journal + projects + writeups) */
 .post-list{list-style:none}
 .post-item{padding:16px 0;border-top:1px solid var(--border)}
 .post-item:first-child{border-top:0;padding-top:0}
@@ -86,12 +76,8 @@ h2{
 .diff.easy{color:#4ade80;border-color:rgba(74,222,128,.3)}
 .diff.medium{color:#facc15;border-color:rgba(250,204,21,.3)}
 .diff.hard{color:#f87171;border-color:rgba(248,113,113,.3)}
-
-/* tags */
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .tag{font-size:.72rem;background:var(--tag-bg);color:var(--muted);padding:2px 8px;border-radius:4px;font-family:"JetBrains Mono",monospace}
-
-/* certs */
 .cert{display:flex;gap:14px;align-items:baseline;padding:14px 0;border-top:1px solid var(--border)}
 .cert:first-child{border-top:0;padding-top:0}
 .cert-status{font-family:"JetBrains Mono",monospace;font-size:.72rem;flex:0 0 80px}
@@ -99,10 +85,8 @@ h2{
 .cert-status.wip{color:#facc15}
 .cert-name{font-size:.9rem;font-weight:500}
 .cert-who{font-size:.8rem;color:var(--muted);margin-top:2px}
-
 .empty{font-size:.9rem;color:var(--muted)}
 footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border);padding-top:16px}
-
 @media(max-width:700px){
   .wrap{flex-direction:column;padding:0 16px}
   .side{width:100%;height:auto;position:static;border-right:0;border-bottom:1px solid var(--border);padding:24px 0;flex-direction:row;flex-wrap:wrap;gap:12px;align-items:center}
@@ -117,7 +101,6 @@ footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted
 </head>
 <body>
 <div class="wrap">
-
   <aside class="side">
     <div>
       <div class="side-name">Your Name</div>
@@ -140,7 +123,6 @@ footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted
 
   <main>
 
-    <!-- ── ABOUT ── edit this section directly in the file -->
     <section id="about">
       <div class="about-name">Your Name</div>
       <div class="about-role">Cybersecurity — SOC / AppSec</div>
@@ -150,22 +132,21 @@ footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted
       </p>
     </section>
 
-    <!-- ── JOURNAL ── auto-updates from _posts with category: journal -->
     <section id="journal">
       <h2>journal</h2>
       <div class="sec-line"></div>
-      {% assign journal_posts = site.categories.journal %}
-      {% if journal_posts.size > 0 %}
+      {% assign journal_entries = site.journal | sort: 'date' | reverse %}
+      {% if journal_entries.size > 0 %}
       <ul class="post-list">
-        {% for post in journal_posts %}
+        {% for entry in journal_entries %}
         <li class="post-item">
-          <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+          <a class="post-title" href="{{ entry.url }}">{{ entry.title }}</a>
           <div class="post-meta">
-            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+            <span>{{ entry.date | date: "%b %d, %Y" }}</span>
           </div>
-          {% if post.summary %}<div class="post-summary">{{ post.summary }}</div>{% endif %}
-          {% if post.tags %}
-          <div class="tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+          {% if entry.summary %}<div class="post-summary">{{ entry.summary }}</div>{% endif %}
+          {% if entry.tags %}
+          <div class="tags">{% for tag in entry.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
           {% endif %}
         </li>
         {% endfor %}
@@ -175,24 +156,23 @@ footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted
       {% endif %}
     </section>
 
-    <!-- ── WRITEUPS ── auto-updates from _posts with category: writeup -->
     <section id="writeups">
       <h2>writeups</h2>
       <div class="sec-line"></div>
-      {% assign writeup_posts = site.categories.writeup %}
-      {% if writeup_posts.size > 0 %}
+      {% assign writeup_entries = site.writeups | sort: 'date' | reverse %}
+      {% if writeup_entries.size > 0 %}
       <ul class="post-list">
-        {% for post in writeup_posts %}
+        {% for entry in writeup_entries %}
         <li class="post-item">
-          <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+          <a class="post-title" href="{{ entry.url }}">{{ entry.title }}</a>
           <div class="post-meta">
-            {% if post.platform %}<span>{{ post.platform }}</span>{% endif %}
-            <span>{{ post.date | date: "%b %d, %Y" }}</span>
-            {% if post.difficulty %}<span class="diff {{ post.difficulty | downcase }}">{{ post.difficulty }}</span>{% endif %}
+            {% if entry.platform %}<span>{{ entry.platform }}</span>{% endif %}
+            <span>{{ entry.date | date: "%b %d, %Y" }}</span>
+            {% if entry.difficulty %}<span class="diff {{ entry.difficulty | downcase }}">{{ entry.difficulty }}</span>{% endif %}
           </div>
-          {% if post.summary %}<div class="post-summary">{{ post.summary }}</div>{% endif %}
-          {% if post.tags %}
-          <div class="tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+          {% if entry.summary %}<div class="post-summary">{{ entry.summary }}</div>{% endif %}
+          {% if entry.tags %}
+          <div class="tags">{% for tag in entry.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
           {% endif %}
         </li>
         {% endfor %}
@@ -202,22 +182,21 @@ footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted
       {% endif %}
     </section>
 
-    <!-- ── PROJECTS ── auto-updates from _posts with category: project -->
     <section id="projects">
       <h2>projects</h2>
       <div class="sec-line"></div>
-      {% assign project_posts = site.categories.project %}
-      {% if project_posts.size > 0 %}
+      {% assign project_entries = site.projects | sort: 'date' | reverse %}
+      {% if project_entries.size > 0 %}
       <ul class="post-list">
-        {% for post in project_posts %}
+        {% for entry in project_entries %}
         <li class="post-item">
-          <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+          <a class="post-title" href="{{ entry.url }}">{{ entry.title }}</a>
           <div class="post-meta">
-            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+            <span>{{ entry.date | date: "%b %d, %Y" }}</span>
           </div>
-          {% if post.summary %}<div class="post-summary">{{ post.summary }}</div>{% endif %}
-          {% if post.tags %}
-          <div class="tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+          {% if entry.summary %}<div class="post-summary">{{ entry.summary }}</div>{% endif %}
+          {% if entry.tags %}
+          <div class="tags">{% for tag in entry.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
           {% endif %}
         </li>
         {% endfor %}
@@ -227,16 +206,10 @@ footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted
       {% endif %}
     </section>
 
-    <!-- ── CERTIFICATIONS ── edit this section directly in the file -->
     <section id="certs">
       <h2>certifications</h2>
       <div class="sec-line"></div>
-
-      <!-- add your certs below, copy the div block for each one -->
-      <!-- status class: "done" for completed, "wip" for in progress -->
-
       <p class="empty">Coming soon.</p>
-
       <!--
       <div class="cert">
         <span class="cert-status done">Completed</span>
@@ -259,17 +232,15 @@ footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted
 
   </main>
 </div>
-
 <script>
 function toggleTheme(){
   const html = document.documentElement;
   const dark = html.getAttribute("data-theme")==="dark";
-  html.setAttribute("data-theme", dark?"light":"dark");
-  document.getElementById("themeBtn").textContent = dark?"☾ dark":"☀ light";
+  html.setAttribute("data-theme",dark?"light":"dark");
+  document.getElementById("themeBtn").textContent=dark?"☾ dark":"☀ light";
 }
-// scroll spy
-const navLinks = [...document.querySelectorAll('#sidenav a')];
-const spy = new IntersectionObserver(entries=>{
+const navLinks=[...document.querySelectorAll('#sidenav a')];
+const spy=new IntersectionObserver(entries=>{
   entries.forEach(en=>{
     if(en.isIntersecting)
       navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+en.target.id));
