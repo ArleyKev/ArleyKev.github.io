@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -8,26 +11,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ── tokens ── */
 :root[data-theme="dark"]{
-  --bg:#0f1117;
-  --bg2:#181c25;
-  --border:#252c3a;
-  --text:#e2e8f0;
-  --muted:#64748b;
-  --accent:#60a5fa;
-  --tag-bg:#1e2535;
+  --bg:#0f1117;--bg2:#181c25;--border:#252c3a;
+  --text:#e2e8f0;--muted:#64748b;--accent:#60a5fa;--tag-bg:#1e2535;
 }
 :root[data-theme="light"]{
-  --bg:#f8fafc;
-  --bg2:#ffffff;
-  --border:#e2e8f0;
-  --text:#1e293b;
-  --muted:#64748b;
-  --accent:#2563eb;
-  --tag-bg:#eff6ff;
+  --bg:#f8fafc;--bg2:#ffffff;--border:#e2e8f0;
+  --text:#1e293b;--muted:#64748b;--accent:#2563eb;--tag-bg:#eff6ff;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -39,327 +30,243 @@ body{
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 
-/* ── layout ── */
 .wrap{display:flex;min-height:100vh;max-width:960px;margin:0 auto;padding:0 20px}
 
-/* ── sidebar ── */
+/* sidebar */
 .side{
-  width:180px;flex-shrink:0;
-  position:sticky;top:0;height:100vh;
-  padding:48px 24px 48px 0;
-  display:flex;flex-direction:column;
+  width:180px;flex-shrink:0;position:sticky;top:0;height:100vh;
+  padding:48px 24px 48px 0;display:flex;flex-direction:column;
   border-right:1px solid var(--border);
 }
 .side-name{font-weight:600;font-size:1rem;margin-bottom:4px}
 .side-role{font-size:.8rem;color:var(--muted);margin-bottom:32px}
 .side nav{display:flex;flex-direction:column;gap:2px;flex:1}
 .side nav a{
-  font-family:"JetBrains Mono",monospace;
-  font-size:.78rem;color:var(--muted);
-  padding:6px 0 6px 12px;
-  border-left:2px solid transparent;
+  font-family:"JetBrains Mono",monospace;font-size:.78rem;color:var(--muted);
+  padding:6px 0 6px 12px;border-left:2px solid transparent;
   transition:color .15s,border-color .15s;
 }
 .side nav a:hover{color:var(--text);text-decoration:none}
 .side nav a.active{color:var(--accent);border-left-color:var(--accent)}
 .side-links{display:flex;flex-direction:column;gap:8px;margin-top:24px}
-.side-links a{font-size:.78rem;color:var(--muted);border:0}
+.side-links a{font-size:.78rem;color:var(--muted)}
 .side-links a:hover{color:var(--accent);text-decoration:none}
-
-/* toggle */
 .toggle{
-  margin-top:24px;background:none;border:1px solid var(--border);
-  color:var(--muted);border-radius:6px;padding:6px 10px;
-  font-size:.75rem;cursor:pointer;font-family:"JetBrains Mono",monospace;
+  margin-top:16px;background:none;border:1px solid var(--border);
+  color:var(--muted);border-radius:6px;padding:6px 10px;font-size:.75rem;
+  cursor:pointer;font-family:"JetBrains Mono",monospace;text-align:left;
   transition:color .15s,border-color .15s;
-  text-align:left;
 }
 .toggle:hover{color:var(--text);border-color:var(--muted)}
 
-/* ── main ── */
+/* main */
 main{flex:1;padding:64px 0 100px 52px;max-width:640px}
-section{margin-bottom:80px;scroll-margin-top:40px}
+section{margin-bottom:72px;scroll-margin-top:40px}
+
 h2{
-  font-family:"JetBrains Mono",monospace;
-  font-size:1rem;font-weight:500;
-  color:var(--accent);margin-bottom:6px;
+  font-family:"JetBrains Mono",monospace;font-size:1rem;
+  font-weight:500;color:var(--accent);margin-bottom:6px;
 }
-.sec-line{height:1px;background:var(--border);margin-bottom:28px}
-.sec-sub{font-size:.85rem;color:var(--muted);margin-bottom:24px;margin-top:-18px}
+.sec-line{height:1px;background:var(--border);margin-bottom:24px}
 
 /* about */
-.about-name{font-size:1.8rem;font-weight:600;line-height:1.2;margin-bottom:12px}
-.about-text{color:var(--muted);font-size:.95rem;max-width:55ch}
+.about-name{font-size:1.8rem;font-weight:600;line-height:1.2;margin-bottom:8px}
+.about-role{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--accent);margin-bottom:16px}
+.about-text{color:var(--muted);font-size:.95rem;max-width:52ch}
 
-/* journal */
-details{border-top:1px solid var(--border)}
-details:first-of-type{border-top:0}
-summary{
-  list-style:none;cursor:pointer;
-  padding:16px 0;display:flex;align-items:baseline;gap:16px;
-}
-summary::-webkit-details-marker{display:none}
-summary .d-date{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted);flex:0 0 80px}
-summary .d-title{flex:1;font-size:.95rem;font-weight:500}
-summary .d-icon{font-size:.75rem;color:var(--muted)}
-details[open] summary .d-title{color:var(--accent)}
-details[open] summary .d-icon{color:var(--accent)}
-.d-body{padding:4px 0 20px 96px;font-size:.9rem;color:var(--muted)}
-.d-body p{margin-bottom:10px}
-.d-body ul{padding-left:16px}
-.d-body li{margin-bottom:4px}
-
-/* tags */
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.tag{font-size:.72rem;background:var(--tag-bg);color:var(--muted);padding:2px 8px;border-radius:4px;font-family:"JetBrains Mono",monospace}
-
-/* ctf entries */
-.entry{padding:18px 0;border-top:1px solid var(--border)}
-.entry:first-of-type{border-top:0;padding-top:0}
-.entry-meta{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted);margin-bottom:6px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.entry h3{font-size:.95rem;font-weight:500;margin-bottom:6px}
-.entry p{font-size:.88rem;color:var(--muted)}
-.diff{font-size:.7rem;padding:1px 7px;border-radius:3px;border:1px solid}
+/* post list (journal + projects + writeups) */
+.post-list{list-style:none}
+.post-item{padding:16px 0;border-top:1px solid var(--border)}
+.post-item:first-child{border-top:0;padding-top:0}
+.post-item a.post-title{font-size:.95rem;font-weight:500;color:var(--text)}
+.post-item a.post-title:hover{color:var(--accent);text-decoration:none}
+.post-meta{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted);margin-top:3px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.post-summary{font-size:.88rem;color:var(--muted);margin-top:4px}
+.diff{font-size:.7rem;padding:1px 6px;border-radius:3px;border:1px solid}
 .diff.easy{color:#4ade80;border-color:rgba(74,222,128,.3)}
 .diff.medium{color:#facc15;border-color:rgba(250,204,21,.3)}
 .diff.hard{color:#f87171;border-color:rgba(248,113,113,.3)}
 
-/* projects */
-.proj{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:12px}
-.proj-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
-.proj h3{font-size:.95rem;font-weight:600}
-.proj-link{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted)}
-.proj p{font-size:.88rem;color:var(--muted);margin-bottom:10px}
+/* tags */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:.72rem;background:var(--tag-bg);color:var(--muted);padding:2px 8px;border-radius:4px;font-family:"JetBrains Mono",monospace}
 
 /* certs */
 .cert{display:flex;gap:14px;align-items:baseline;padding:14px 0;border-top:1px solid var(--border)}
-.cert:first-of-type{border-top:0;padding-top:0}
+.cert:first-child{border-top:0;padding-top:0}
 .cert-status{font-family:"JetBrains Mono",monospace;font-size:.72rem;flex:0 0 80px}
 .cert-status.done{color:#4ade80}
 .cert-status.wip{color:#facc15}
 .cert-name{font-size:.9rem;font-weight:500}
 .cert-who{font-size:.8rem;color:var(--muted);margin-top:2px}
 
+.empty{font-size:.9rem;color:var(--muted)}
 footer{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border);padding-top:16px}
 
-/* mobile */
 @media(max-width:700px){
   .wrap{flex-direction:column;padding:0 16px}
   .side{width:100%;height:auto;position:static;border-right:0;border-bottom:1px solid var(--border);padding:24px 0;flex-direction:row;flex-wrap:wrap;gap:12px;align-items:center}
-  .side-name{margin-bottom:0}
-  .side-role{margin-bottom:0}
-  .side nav{flex-direction:row;flex-wrap:wrap;gap:0}
+  .side nav{flex-direction:row;flex-wrap:wrap}
   .side nav a{border-left:0;border-bottom:2px solid transparent;padding:4px 10px 4px 0}
   .side nav a.active{border-left:0;border-bottom-color:var(--accent)}
   .side-links{flex-direction:row;margin-top:0}
   .toggle{margin-top:0}
   main{padding:32px 0 60px}
-  .d-body{padding-left:0}
 }
 </style>
 </head>
 <body>
-
 <div class="wrap">
+
   <aside class="side">
     <div>
-      <div class="side-name" id="sName"></div>
-      <div class="side-role" id="sRole"></div>
+      <div class="side-name">Your Name</div>
+      <div class="side-role">Cybersecurity</div>
     </div>
     <nav id="sidenav">
       <a href="#about">about</a>
       <a href="#journal">journal</a>
-      <a href="#ctf">writeups</a>
+      <a href="#writeups">writeups</a>
       <a href="#projects">projects</a>
       <a href="#certs">certifications</a>
     </nav>
-    <div class="side-links" id="sLinks"></div>
+    <div class="side-links">
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:you@example.com">Email</a>
+    </div>
     <button class="toggle" id="themeBtn" onclick="toggleTheme()">☀ light</button>
   </aside>
 
   <main>
+
+    <!-- ── ABOUT ── edit this section directly in the file -->
     <section id="about">
-      <div class="about-name" id="aName"></div>
-      <div class="about-text" id="aText"></div>
+      <div class="about-name">Your Name</div>
+      <div class="about-role">Cybersecurity — SOC / AppSec</div>
+      <p class="about-text">
+        Write 2–3 sentences about yourself here. Where you're coming from,
+        what you're focused on, what you're working toward.
+      </p>
     </section>
 
+    <!-- ── JOURNAL ── auto-updates from _posts with category: journal -->
     <section id="journal">
       <h2>journal</h2>
       <div class="sec-line"></div>
-      <p class="sec-sub">what i studied, what broke, what i figured out.</p>
-      <div id="journalList"></div>
+      {% assign journal_posts = site.categories.journal %}
+      {% if journal_posts.size > 0 %}
+      <ul class="post-list">
+        {% for post in journal_posts %}
+        <li class="post-item">
+          <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+          <div class="post-meta">
+            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+          </div>
+          {% if post.summary %}<div class="post-summary">{{ post.summary }}</div>{% endif %}
+          {% if post.tags %}
+          <div class="tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty">No entries yet.</p>
+      {% endif %}
     </section>
 
-    <section id="ctf">
+    <!-- ── WRITEUPS ── auto-updates from _posts with category: writeup -->
+    <section id="writeups">
       <h2>writeups</h2>
       <div class="sec-line"></div>
-      <p class="sec-sub">TryHackMe, LetsDefend, home lab work.</p>
-      <div id="ctfList"></div>
+      {% assign writeup_posts = site.categories.writeup %}
+      {% if writeup_posts.size > 0 %}
+      <ul class="post-list">
+        {% for post in writeup_posts %}
+        <li class="post-item">
+          <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+          <div class="post-meta">
+            {% if post.platform %}<span>{{ post.platform }}</span>{% endif %}
+            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+            {% if post.difficulty %}<span class="diff {{ post.difficulty | downcase }}">{{ post.difficulty }}</span>{% endif %}
+          </div>
+          {% if post.summary %}<div class="post-summary">{{ post.summary }}</div>{% endif %}
+          {% if post.tags %}
+          <div class="tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty">No writeups yet.</p>
+      {% endif %}
     </section>
 
+    <!-- ── PROJECTS ── auto-updates from _posts with category: project -->
     <section id="projects">
       <h2>projects</h2>
       <div class="sec-line"></div>
-      <div id="projList"></div>
+      {% assign project_posts = site.categories.project %}
+      {% if project_posts.size > 0 %}
+      <ul class="post-list">
+        {% for post in project_posts %}
+        <li class="post-item">
+          <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+          <div class="post-meta">
+            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+          </div>
+          {% if post.summary %}<div class="post-summary">{{ post.summary }}</div>{% endif %}
+          {% if post.tags %}
+          <div class="tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty">No projects yet.</p>
+      {% endif %}
     </section>
 
+    <!-- ── CERTIFICATIONS ── edit this section directly in the file -->
     <section id="certs">
       <h2>certifications</h2>
       <div class="sec-line"></div>
-      <div id="certList"></div>
+
+      <!-- add your certs below, copy the div block for each one -->
+      <!-- status class: "done" for completed, "wip" for in progress -->
+
+      <p class="empty">Coming soon.</p>
+
+      <!--
+      <div class="cert">
+        <span class="cert-status done">Completed</span>
+        <div>
+          <div class="cert-name">Cert Name Here</div>
+          <div class="cert-who">Issuer · 2026</div>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-status wip">In progress</span>
+        <div>
+          <div class="cert-name">Cert Name Here</div>
+          <div class="cert-who">Issuer · Target 2027</div>
+        </div>
+      </div>
+      -->
     </section>
 
-    <footer id="foot"></footer>
+    <footer>Your Name · {{ site.time | date: "%Y" }}</footer>
+
   </main>
 </div>
 
 <script>
-/* =====================================================
-   EDIT THIS SECTION — everything else leave as is
-   ===================================================== */
-
-const ME = {
-  name: "Your Name",
-  role: "Cybersecurity — SOC / AppSec",
-  about: "Write 2-3 sentences about yourself here. Where you're coming from, what you're focused on, what you're working toward.",
-  links: [
-    { label: "GitHub",   url: "https://github.com/yourusername" },
-    { label: "LinkedIn", url: "https://linkedin.com/in/yourusername" },
-    { label: "Email",    url: "mailto:you@example.com" }
-  ]
-};
-
-const JOURNAL = [
-  {
-    date: "2026-09-22",
-    title: "Add your first journal entry here",
-    tags: ["topic", "tool"],
-    body: `
-      <p>What you were studying and why.</p>
-      <ul>
-        <li>What you tried.</li>
-        <li>What didn't work and why.</li>
-        <li>What you actually learned.</li>
-      </ul>`
-  }
-];
-
-const CTF = [
-  {
-    platform: "TryHackMe",
-    name: "Room name",
-    difficulty: "Medium",
-    date: "Sep 2026",
-    summary: "Brief summary of what you did — foothold, escalation, what you learned.",
-    tags: ["tag1", "tag2"],
-    url: ""
-  }
-];
-
-const PROJECTS = [
-  {
-    name: "IAM Policy Analyzer",
-    url: "https://github.com/yourusername/iam-policy-analyzer",
-    repo: "github.com/you/iam-policy-analyzer",
-    desc: "Scans IAM policies and flags overly permissive rules.",
-    tags: ["Python", "AWS", "IAM"]
-  },
-  {
-    name: "JWT Security API",
-    url: "https://github.com/yourusername/jwt-security-api",
-    repo: "github.com/you/jwt-security-api",
-    desc: "Tests JWTs for common vulnerabilities like weak secrets and algorithm confusion.",
-    tags: ["Python", "Flask", "JWT"]
-  },
-  {
-    name: "SIEM Home Lab",
-    url: "https://github.com/yourusername/siem-home-lab",
-    repo: "github.com/you/siem-home-lab",
-    desc: "Windows detection lab with Wazuh, Sysmon, and custom detection rules mapped to MITRE ATT&CK.",
-    tags: ["Wazuh", "Sysmon", "MITRE"]
-  }
-];
-
-const CERTS = [
-  // add yours like this:
-  // { status: "Completed", name: "Cert Name", issuer: "Issuer", year: "2026" },
-  // { status: "In progress", name: "Cert Name", issuer: "Issuer", year: "2027" }
-];
-
-/* =====================================================
-   RENDERING — don't touch below
-   ===================================================== */
-
-const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const tagHtml = a => a&&a.length?`<div class="tags">${a.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:'';
-
-document.getElementById('sName').textContent = ME.name;
-document.getElementById('sRole').textContent = ME.role;
-document.getElementById('aName').textContent = ME.name;
-document.getElementById('aText').textContent = ME.about;
-document.title = ME.name;
-
-document.getElementById('sLinks').innerHTML = ME.links
-  .map(l=>`<a href="${esc(l.url)}"${l.url.startsWith('http')?' target="_blank" rel="noopener"':''}>${esc(l.label)}</a>`)
-  .join('');
-
-document.getElementById('journalList').innerHTML = JOURNAL.length
-  ? JOURNAL.map((e,i)=>`
-    <details${i===0?' open':''}>
-      <summary>
-        <span class="d-date">${esc(e.date)}</span>
-        <span class="d-title">${esc(e.title)}</span>
-        <span class="d-icon">+</span>
-      </summary>
-      <div class="d-body">${e.body}${tagHtml(e.tags)}</div>
-    </details>`).join('')
-  : '<p style="color:var(--muted);font-size:.9rem">No entries yet.</p>';
-
-document.getElementById('ctfList').innerHTML = CTF.length
-  ? CTF.map(c=>`
-    <div class="entry">
-      <div class="entry-meta">
-        <span>${esc(c.platform)}</span>
-        <span>${esc(c.date)}</span>
-        <span class="diff ${esc(c.difficulty).toLowerCase()}">${esc(c.difficulty)}</span>
-      </div>
-      <h3>${c.url?`<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a>`:esc(c.name)}</h3>
-      <p>${esc(c.summary)}</p>
-      ${tagHtml(c.tags)}
-    </div>`).join('')
-  : '<p style="color:var(--muted);font-size:.9rem">No writeups yet.</p>';
-
-document.getElementById('projList').innerHTML = PROJECTS.map(p=>`
-  <div class="proj">
-    <div class="proj-head">
-      <h3>${esc(p.name)}</h3>
-      ${p.url?`<a class="proj-link" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.repo)}</a>`:''}
-    </div>
-    <p>${esc(p.desc)}</p>
-    ${tagHtml(p.tags)}
-  </div>`).join('');
-
-document.getElementById('certList').innerHTML = CERTS.length
-  ? CERTS.map(c=>`
-    <div class="cert">
-      <span class="cert-status ${c.status.toLowerCase().startsWith('comp')?'done':'wip'}">${esc(c.status)}</span>
-      <div>
-        <div class="cert-name">${esc(c.name)}</div>
-        <div class="cert-who">${esc(c.issuer)} · ${esc(c.year)}</div>
-      </div>
-    </div>`).join('')
-  : '<p style="color:var(--muted);font-size:.9rem">Coming soon.</p>';
-
-document.getElementById('foot').textContent = `${ME.name} · updated ${new Date().toISOString().slice(0,10)}`;
-
-// open/close icon
-document.querySelectorAll('details').forEach(d=>{
-  const ic = d.querySelector('.d-icon');
-  const sync = ()=>ic.textContent = d.open?'−':'+';
-  sync();
-  d.addEventListener('toggle',sync);
-});
-
+function toggleTheme(){
+  const html = document.documentElement;
+  const dark = html.getAttribute("data-theme")==="dark";
+  html.setAttribute("data-theme", dark?"light":"dark");
+  document.getElementById("themeBtn").textContent = dark?"☾ dark":"☀ light";
+}
 // scroll spy
 const navLinks = [...document.querySelectorAll('#sidenav a')];
 const spy = new IntersectionObserver(entries=>{
@@ -369,14 +276,6 @@ const spy = new IntersectionObserver(entries=>{
   });
 },{rootMargin:'-20% 0px -70% 0px'});
 document.querySelectorAll('main section').forEach(s=>spy.observe(s));
-
-// theme toggle
-function toggleTheme(){
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme', isDark?'light':'dark');
-  document.getElementById('themeBtn').textContent = isDark?'☾ dark':'☀ light';
-}
 </script>
 </body>
 </html>
