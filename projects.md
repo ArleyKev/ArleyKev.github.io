@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Journal
+title: Projects
 ---
 
-<h2>journal</h2>
+<h2>projects</h2>
 <div class="sec-line"></div>
 
-{% assign journal_posts = site.categories.journal %}
-{% if journal_posts.size > 0 %}
+{% assign project_posts = site.categories.project %}
+{% if project_posts.size > 0 %}
 <ul class="post-list">
-  {% for post in journal_posts %}
+  {% for post in project_posts %}
   <li class="post-item">
     <a href="{{ post.url }}">{{ post.title }}</a>
     <div class="post-date">{{ post.date | date: "%b %d, %Y" }}</div>
@@ -23,5 +23,5 @@ title: Journal
   {% endfor %}
 </ul>
 {% else %}
-<p class="empty">No entries yet.</p>
+<p class="empty">No projects yet.</p>
 {% endif %}
